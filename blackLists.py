@@ -32,6 +32,11 @@ def getBlackLists(blackType="domains"):
             "url": "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist",
             "regex": r"([^#]*?)\n",
             "type": "domains"
+        },
+        "sans": {
+            "url": "https://isc.sans.edu/feeds/suspiciousdomains_High.txt",
+            "regex": r"\n(.*?)\t",
+            "type": "domains"
         }
     }
 
