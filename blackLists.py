@@ -28,6 +28,11 @@ def getBlackLists(blackType="domains"):
             "regex": r"\n(.*?),Domain",
             "type": "domains"
         },
+        "zeus": {
+            "url": "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist",
+            "regex": r"([^#]*?)\n",
+            "type": "domains"
+        }
     }
 
     result = {}
@@ -38,7 +43,10 @@ def getBlackLists(blackType="domains"):
             else:
                 if v['type'] == blackType:
                     src = request("GET", url=v['url']).content
-            result[k] = {'data': findall(v['regex'], src), 'list_type': v['type']}
+            result[k] = {
+                'data': filter(None, map(str.strip, findall(v['regex'], src))),
+                'list_type': v['type']
+            }
         except:
             pass
     return result
