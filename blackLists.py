@@ -37,6 +37,11 @@ def getBlackLists(blackType="domains"):
             "url": "https://isc.sans.edu/feeds/suspiciousdomains_High.txt",
             "regex": r"\n(.*?)\t",
             "type": "domains"
+        },
+        "malwaredomainlist": {
+            "url": "http://www.malwaredomainlist.com/hostslist/hosts.txt",
+            "regex": r"\d+\.\d+\.\d+\.\d+\s+((?!localhost|\s+).*)\r\n",
+            "type": "domains"
         }
     }
 
