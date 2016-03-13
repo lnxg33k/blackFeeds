@@ -42,6 +42,11 @@ def getBlackLists(blackType="domains"):
             "url": "http://www.malwaredomainlist.com/hostslist/hosts.txt",
             "regex": r"\d+\.\d+\.\d+\.\d+\s+((?!localhost|\s+).*)\r\n",
             "type": "domains"
+        },
+        "ransomwaretracker": {
+            "url": "https://ransomwaretracker.abuse.ch/feeds/csv/",
+            "regex": r'".*?",".*?",".*?","(.*?)",".*?",".*?",".*?",".*?",".*?",".*?"',
+            "type": "domains"
         }
     }
 
@@ -54,7 +59,7 @@ def getBlackLists(blackType="domains"):
                 if v['type'] == blackType:
                     src = request("GET", url=v['url']).content
             result[k] = {
-                'data': filter(None, map(str.strip, findall(v['regex'], src))),
+                'data': filter(None, map(str.strip, list(set(findall(v['regex'], src))))),
                 'list_type': v['type']
             }
         except:
